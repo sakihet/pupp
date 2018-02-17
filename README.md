@@ -11,7 +11,7 @@ command line wrapper for puppeteer.
 ## Installation
 
 ```
-npm install pupp
+npm install -g pupp
 ```
 
 ## Usage
