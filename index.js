@@ -24,11 +24,33 @@ async function screenshot(urlStrings) {
   await browser.close()
 }
 
+async function pdf(urlStrings) {
+  const browser = await puppeteer.launch()
+  const page = await browser.newPage()
+  for (let urlString of urlStrings) {
+    if (!urlString.match(/^https?\:\/\//)) {
+      urlString = `https://${urlString}`
+    }
+    const url = new URL(urlString)
+    const fileName = `${url.host}.pdf`
+    await page.goto(urlString)
+    await page.pdf({ path: fileName, format: 'A4' })
+    await console.log(`${fileName} saved`)
+  }
+  await browser.close()
+}
+
 program
   .version(pjson.version)
   .command('screenshot [urls...]')
   .action((urlStrings, cmd) => {
     screenshot(urlStrings)
+  })
+
+program
+  .command('pdf [urls...]')
+  .action((urlStrings, cmd) => {
+    pdf(urlStrings)
   })
 
 program.parse(process.argv)
