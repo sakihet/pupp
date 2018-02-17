@@ -3,6 +3,7 @@
 const program = require('commander')
 const puppeteer = require('puppeteer')
 const { URL } = require('url')
+const pjson = require('./package.json')
 
 let urlString = process.argv[2]
 
@@ -21,7 +22,7 @@ async function screenshot(urlString) {
 }
 
 program
-  .version('0.0.1')
+  .version(pjson.version)
   .command('screenshot <url>')
   .action((urlString, cmd) => {
     screenshot(urlString)
