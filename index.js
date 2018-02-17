@@ -5,27 +5,30 @@ const puppeteer = require('puppeteer')
 const { URL } = require('url')
 const pjson = require('./package.json')
 
-let urlString = process.argv[2]
+let argvLength = process.argv.length
+let urlStrings = process.argv.slice(3, argvLength)
 
-async function screenshot(urlString) {
+async function screenshot(urlStrings) {
   const browser = await puppeteer.launch()
   const page = await browser.newPage()
-  if (!urlString.match(/^https?\:\/\//)) {
-    urlString = `https://${urlString}`
+  for (let urlString of urlStrings) {
+    if (!urlString.match(/^https?\:\/\//)) {
+      urlString = `https://${urlString}`
+    }
+    const url = new URL(urlString)
+    const fileName = `${url.host}.png`
+    await page.goto(urlString)
+    await page.screenshot({ path: fileName, fullPage: true })
+    await console.log(`${fileName} saved`)
   }
-  const url = new URL(urlString)
-  const fileName = `${url.host}.png`
-  await page.goto(urlString)
-  await page.screenshot({ path: fileName })
-  await console.log(`${fileName} saved`)
   await browser.close()
 }
 
 program
   .version(pjson.version)
-  .command('screenshot <url>')
-  .action((urlString, cmd) => {
-    screenshot(urlString)
+  .command('screenshot [urls...]')
+  .action((urlStrings, cmd) => {
+    screenshot(urlStrings)
   })
 
 program.parse(process.argv)
