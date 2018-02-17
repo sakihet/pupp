@@ -2,6 +2,8 @@
 
 command line wrapper for puppeteer.
 
+[![NPM pupp package](https://img.shields.io/npm/v/pupp.svg)](https://npmjs.org/package/pupp)
+
 ## Features
 - save screenshots
 - create PDFs
