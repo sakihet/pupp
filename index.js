@@ -48,8 +48,6 @@ async function consoleLog(urlStrings) {
   for (let urlString of urlStrings) {
     urlString = buildURL(urlString)
     const url = new URL(urlString)
-    const fileName = `${url.host}.pdf`
-
     page.on('console', msg => {
       console.log('PAGE LOG:', msg.text())
     })
@@ -60,6 +58,8 @@ async function consoleLog(urlStrings) {
 
 program
   .version(pjson.version)
+
+program
   .command('screenshot [urls...]')
   .action((urlStrings, cmd) => {
     screenshot(urlStrings)
