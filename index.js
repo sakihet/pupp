@@ -40,6 +40,24 @@ async function pdf(urlStrings) {
   await browser.close()
 }
 
+async function consoleLog(urlStrings) {
+  const browser = await puppeteer.launch()
+  const page = await browser.newPage()
+  for (let urlString of urlStrings) {
+    if (!urlString.match(/^https?\:\/\//)) {
+      urlString = `https://${urlString}`
+    }
+    const url = new URL(urlString)
+    const fileName = `${url.host}.pdf`
+
+    page.on('console', msg => {
+      console.log('PAGE LOG:', msg.text())
+    })
+    await page.goto(urlString)
+  }
+  await browser.close()
+}
+
 program
   .version(pjson.version)
   .command('screenshot [urls...]')
@@ -51,6 +69,12 @@ program
   .command('pdf [urls...]')
   .action((urlStrings, cmd) => {
     pdf(urlStrings)
+  })
+
+program
+  .command('console [urls...]')
+  .action((urlStrings, cmd) => {
+    consoleLog(urlStrings)
   })
 
 program.parse(process.argv)
