@@ -8,13 +8,17 @@ const pjson = require('./package.json')
 let argvLength = process.argv.length
 let urlStrings = process.argv.slice(3, argvLength)
 
+const buildURL = (urlString) => {
+  if (!urlString.match(/^https?\:\/\//)) {
+    return `https://${urlString}`
+  }
+}
+
 async function screenshot(urlStrings) {
   const browser = await puppeteer.launch()
   const page = await browser.newPage()
   for (let urlString of urlStrings) {
-    if (!urlString.match(/^https?\:\/\//)) {
-      urlString = `https://${urlString}`
-    }
+    urlString = buildURL(urlString)
     const url = new URL(urlString)
     const fileName = `${url.host}.png`
     await page.goto(urlString)
@@ -28,9 +32,7 @@ async function pdf(urlStrings) {
   const browser = await puppeteer.launch()
   const page = await browser.newPage()
   for (let urlString of urlStrings) {
-    if (!urlString.match(/^https?\:\/\//)) {
-      urlString = `https://${urlString}`
-    }
+    urlString = buildURL(urlString)
     const url = new URL(urlString)
     const fileName = `${url.host}.pdf`
     await page.goto(urlString)
@@ -44,9 +46,7 @@ async function consoleLog(urlStrings) {
   const browser = await puppeteer.launch()
   const page = await browser.newPage()
   for (let urlString of urlStrings) {
-    if (!urlString.match(/^https?\:\/\//)) {
-      urlString = `https://${urlString}`
-    }
+    urlString = buildURL(urlString)
     const url = new URL(urlString)
     const fileName = `${url.host}.pdf`
 
