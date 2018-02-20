@@ -14,13 +14,13 @@ const buildURL = (urlString) => {
   }
 }
 
-async function screenshot(urlStrings) {
+async function screenshot(urlStrings, type) {
   const browser = await puppeteer.launch()
   const page = await browser.newPage()
   for (let urlString of urlStrings) {
     urlString = buildURL(urlString)
     const url = new URL(urlString)
-    const fileName = `${url.host}.png`
+    const fileName = `${url.host}.${type}`
     await page.goto(urlString)
     await page.screenshot({ path: fileName, fullPage: true })
     await console.log(`${fileName} saved`)
@@ -61,8 +61,10 @@ program
 
 program
   .command('screenshot [urls...]')
+  .option('-t, --type <type>', "Specify screenshot type. Defaults to 'png'.")
   .action((urlStrings, cmd) => {
-    screenshot(urlStrings)
+    let type = cmd.type || 'png'
+    screenshot(urlStrings, type)
   })
 
 program
