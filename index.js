@@ -4,15 +4,10 @@ const program = require('commander')
 const puppeteer = require('puppeteer')
 const { URL } = require('url')
 const pjson = require('./package.json')
+const buildURL = require('./buildURL')
 
 let argvLength = process.argv.length
 let urlStrings = process.argv.slice(3, argvLength)
-
-const buildURL = (urlString) => {
-  if (!urlString.match(/^https?\:\/\//)) {
-    return `https://${urlString}`
-  }
-}
 
 async function screenshot(urlStrings, type) {
   const browser = await puppeteer.launch()
