@@ -2,6 +2,7 @@
 
 command line wrapper for puppeteer.
 
+[![Build Status](https://travis-ci.org/sakihet/pupp.svg?branch=master)](https://travis-ci.org/sakihet/pupp)
 [![NPM pupp package](https://img.shields.io/npm/v/pupp.svg)](https://npmjs.org/package/pupp)
 
 ## Features
