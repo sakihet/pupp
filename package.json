@@ -1,7 +1,7 @@
 {
   "name": "pupp",
-  "version": "0.0.4",
-  "description": "puppeteer stuff",
+  "version": "0.0.5",
+  "description": "command line wrapper for puppeteer.",
   "bin": "index.js",
   "scripts": {
     "test": "jest"
@@ -11,7 +11,10 @@
     "url": "git+https://github.com/sakihet/pupp.git"
   },
   "keywords": [
-    "puppeteer"
+    "cli",
+    "puppeteer",
+    "pdf",
+    "screenshot"
   ],
   "author": "saki",
   "license": "MIT",
