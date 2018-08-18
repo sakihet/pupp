@@ -1,6 +1,6 @@
 {
   "name": "pupp",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "command line wrapper for puppeteer.",
   "bin": "index.js",
   "scripts": {
